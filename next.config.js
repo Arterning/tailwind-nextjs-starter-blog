@@ -1,5 +1,15 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 })
 
 // You might need to insert additional domains in script-src if you are using external services
@@ -53,6 +63,11 @@ const securityHeaders = [
 ]
 
 module.exports = withBundleAnalyzer({
+  images: {
+    // 图片压缩
+    formats: ['image/avif', 'image/webp'],
+    domains: ['raw.githubusercontent.com', 'www.notion.so'],
+  },
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   eslint: {
